@@ -1,33 +1,36 @@
-class Visiting:
+class Attendance:
     def __init__(self):
         pass
 
-    def display_visitings(self):
+    def display_Attendance(self):
         print('\nКоличество пропусков студентов: ')
         for i in visitings:
             print(i, visitings[i])
 
-    def add_visitings(self,name):
-        visitings[name]+=1
+    def add_Attendance_rep(self,name):
+        visitings[name][0]+=1
 
-class Rates:
-    def __init__(self,diary_math, diary_ru_lang, diary_en_lang):
+    def add_Attendance_no_rep(self,name):
+        visitings[name][1]+=1
+
+class progress:
+    def __init__(self,diary_math, diary_ru_lang, diary_istor):
         self.diary_math=diary_math
         self.diary_ru_lang=diary_ru_lang
-        self.diary_en_lang=diary_en_lang
+        self.diary_istor=diary_istor
 
-    def display_all_rates(self):
+    def display_all_progress(self):
         print('\nМатематике: ')
         for i in diary_math:
             print(i, *diary_math[i])
         print('\nРусский язык: ')
         for i in diary_ru_lang:
             print(i, *diary_ru_lang[i])
-        print('\nАнглийский язык: ')
-        for i in diary_en_lang:
-            print(i, *diary_en_lang[i])
+        print('\n История: ')
+        for i in diary_istor:
+            print(i, *diary_istor[i])
 
-    def add_rate(self, rate,subject,name):
+    def add_progress(self, rate,subject,name):
         if subject == '1':
             if name in self.diary_math:
                 self.diary_math[name].append(rate)  
@@ -41,8 +44,8 @@ class Rates:
                 print('\nТакого ученика нет.')
 
         elif subject == '3':
-            if name in self.diary_en_lang:
-                self.diary_en_lang[name].append(rate)
+            if name in self.diary_istor:
+                self.diary_istor[name].append(rate)
             else:
                 print('\nТакого ученика нет.')
         else:
@@ -56,43 +59,44 @@ class Students:
     def add_student(self, name):
         diary_math[name] = []
         diary_ru_lang[name] = []
-        diary_en_lang[name] = []
+        diary_istor[name] = []
         visitings[name] = 0
 
     def remove_student(self, name):
         diary_math.pop(name)
         diary_ru_lang.pop(name)
-        diary_en_lang.pop(name)
+        diary_istor.pop(name)
 
 
 
 diary_math = {
-    'Прохор Тигранович': [5,2,3,4],
-    'Эльнара Андреевна': [4,5,3,5]
+    'Роман Михалых': [5,2,3,4],
+    'Николай Евтушенков': [4,5,3,5]
 }
 
 diary_ru_lang = {
-    'Прохор Тигранович': [2,2,3,4],
-    'Эльнара Андреевна': [4,5,2,5]
+    'Роман Михалых': [2,2,3,4],
+   'Николай Евтушенков': [4,5,2,5]
 }
 
-diary_en_lang = {
-    'Прохор Тигранович': [5,5,5,4],
-    'Эльнара Андреевна': [4,5,5,5]
+diary_istor = {
+    'Роман Михалых': [5,5,5,4],
+   'Николай Евтушенков': [4,5,5,5]
 }
 
 visitings = {
-    'Прохор Тигранович': 1,
-    'Эльнара Андреевна': 2
+    'Роман Михалых': [1,1],
+    'Николай Евтушенков': [2,2]
 }
 
-v = Visiting()
-r = Rates(diary_math, diary_ru_lang, diary_en_lang)
+v = Attendance()
+r = progress(diary_math, diary_ru_lang, diary_istor)
 s = Students()
 
 while True:
     print('Оценки по предметам:')
-    r.display_all_rates()
+    r.display_all_progress()
+    print('-----------------------------')
     choise = input('\nВыберите действие: (1)Выставить оценку (2)Показать пропуски (3)Ученики (4)Выкл: ')
     if choise == '1':
         imya = input('Введите имя и фамилию ученика: ')
@@ -100,18 +104,30 @@ while True:
             sub = input('\nВыберите предмет: (1)Математика (2)Русский язык (3)Английский язык (4)Назад: ')
             if sub != '4':
                 gr = input('Введите оценку: ')
-                r.add_rate(gr,sub,imya)
-                r.display_all_rates()
+                r.add_progress(gr,sub,imya)
+                r.display_all_progress()
+                print('-----------------------------')
             else:
                 break
     elif choise == '2':
-        v.display_visitings()
+        v.display_Attendance()
+        print('-----------------------------')
         while True:
             choise2 = input('\nВыберите действие: (1)Выставить пропуски (2)Назад: ')
             if choise2 == '1':
-                stu = input('\nВведите имя и фамилию ученика: ')
-                v.add_visitings(stu)
-                v.display_visitings()
+                choise4 = input('\nВыберите действие: (1)По уважительной  (2)По не уважительной (3)Назад: ')
+                if choise4 == '1':
+                    stu = input('Введите имя и фамилию ученика: ')
+                    v.add_Attendance_rep(stu)
+                    v.display_Attendance()
+                    print('-----------------------------')
+                elif choise4 == '2':
+                    stu = input('Введите имя и фамилию ученика: ')    
+                    v.add_Attendance_no_rep(stu)
+                    v.display_Attendance()
+                    print('-----------------------------')
+                elif choise4 == '3':
+                    break
             elif choise2 == '2':
                 break
     elif choise == '3':
@@ -119,6 +135,7 @@ while True:
             print()
             for i in diary_math:
                 print(i)
+            print('-----------------------------')
             choise3 = input('\n(1)Зачислить ученика (2)Отчислить ученика (3)Назад: ')
             if choise3 == '1':
                 stu = input('Введите имя и фамилию ученика: ')
