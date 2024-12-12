@@ -89,13 +89,13 @@ visitings = {
     'Николай Евтушенков': [2,2]
 }
 
-v = Attendance()
-r = progress(diary_math, diary_ru_lang, diary_istor)
+a = Attendance()
+p = progress(diary_math, diary_ru_lang, diary_istor)
 s = Students()
 
 while True:
     print('Оценки по предметам:')
-    r.display_all_progress()
+    p.display_all_progress()
     print('-----------------------------')
     choise = input('\nВыберите действие: (1)Выставить оценку (2)Показать пропуски (3)Ученики (4)Выкл: ')
     if choise == '1':
@@ -104,13 +104,13 @@ while True:
             sub = input('\nВыберите предмет: (1)Математика (2)Русский язык (3)Английский язык (4)Назад: ')
             if sub != '4':
                 gr = input('Введите оценку: ')
-                r.add_progress(gr,sub,imya)
-                r.display_all_progress()
+                p.add_progress(gr,sub,imya)
+                p.display_all_progress()
                 print('-----------------------------')
             else:
                 break
     elif choise == '2':
-        v.display_Attendance()
+        a.display_Attendance()
         print('-----------------------------')
         while True:
             choise2 = input('\nВыберите действие: (1)Выставить пропуски (2)Назад: ')
@@ -118,13 +118,13 @@ while True:
                 choise4 = input('\nВыберите действие: (1)По уважительной  (2)По не уважительной (3)Назад: ')
                 if choise4 == '1':
                     stu = input('Введите имя и фамилию ученика: ')
-                    v.add_Attendance_rep(stu)
-                    v.display_Attendance()
+                    a.add_Attendance_rep(stu)
+                    a.display_Attendance()
                     print('-----------------------------')
                 elif choise4 == '2':
                     stu = input('Введите имя и фамилию ученика: ')    
-                    v.add_Attendance_no_rep(stu)
-                    v.display_Attendance()
+                    a.add_Attendance_no_rep(stu)
+                    a.display_Attendance()
                     print('-----------------------------')
                 elif choise4 == '3':
                     break
